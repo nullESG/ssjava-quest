@@ -524,76 +524,50 @@
       </article>
 
       <article
-        class="glossary-card"
-        data-keywords="scope スコープ 共有範囲 データ"
-      >
-        <h2>スコープ</h2>
-        <p class="reading">SCOPE</p>
+  class="glossary-card"
+  data-keywords="scope スコープ リクエストスコープ データ共有"
+>
+  <h2>スコープ</h2>
+  <p class="reading">SCOPE</p>
 
-        <p>
-          保存したデータを共有・利用できる範囲。
-          用途に応じて適切なスコープを選ぶ。
-        </p>
+  <p>
+    保存したデータを共有・利用できる範囲。
+    今回の試験では、ServletからJSPへデータを渡すための
+    リクエストスコープが重要。
+  </p>
 
-        <p class="exam-point">
-          リクエスト・セッション・アプリケーションの
-          違いを説明できるようにする。
-        </p>
-      </article>
+  <p class="exam-point">
+    Servletで<code>setAttribute()</code>を使って保存し、
+    フォワード先のJSPで<code>getAttribute()</code>を使って
+    取得する流れを覚える。
+  </p>
+</article>
 
-      <article
-        class="glossary-card"
-        data-keywords="request scope リクエストスコープ setattribute getattribute"
-      >
-        <h2>リクエストスコープ</h2>
-        <p class="reading">REQUEST SCOPE</p>
+<article
+  class="glossary-card"
+  data-keywords="request scope リクエストスコープ setattribute getattribute servlet jsp forward"
+>
+  <h2>リクエストスコープ</h2>
+  <p class="reading">REQUEST SCOPE</p>
 
-        <p>
-          基本的に1回のリクエスト処理内で
-          データを共有するスコープ。
-        </p>
+  <p>
+    1回のリクエスト処理内でデータを共有するスコープ。
+    Servletからフォワード先のJSPへ、
+    JavaBeansなどのインスタンスを渡すときに使用する。
+  </p>
 
-        <p class="exam-point">
-          Servletからフォワード先のJSPへ
-          データを渡す場合に適している。
-        </p>
-      </article>
+  <p class="exam-point">
+    保存：
+    <code>request.setAttribute("user", user);</code><br>
 
-      <article
-        class="glossary-card"
-        data-keywords="session scope セッションスコープ ログイン 利用者"
-      >
-        <h2>セッションスコープ</h2>
-        <p class="reading">SESSION SCOPE</p>
+    取得：
+    <code>request.getAttribute("user");</code><br>
 
-        <p>
-          同じ利用者の複数リクエスト間で
-          データを共有するスコープ。
-        </p>
+    リクエストスコープのデータをJSPへ渡す場合は、
+    同じリクエストを渡すフォワードを使う。
+  </p>
+</article>
 
-        <p class="exam-point">
-          ログイン情報や買い物かごなどで使われる。
-          不要になったデータは削除する。
-        </p>
-      </article>
-
-      <article
-        class="glossary-card"
-        data-keywords="application scope アプリケーションスコープ servletcontext 全体"
-      >
-        <h2>アプリケーションスコープ</h2>
-        <p class="reading">APPLICATION SCOPE</p>
-
-        <p>
-          Webアプリケーション全体で
-          データを共有するスコープ。
-        </p>
-
-        <p class="exam-point">
-          複数の利用者から共有される。
-          共有範囲が非常に広い。
-        </p>
-      </article>
 
       <article
         class="glossary-card"
@@ -720,11 +694,368 @@
         </p>
       </article>
 
-    </section>
+   <!-- =====================================================
+     試験範囲強化用の追加カード
+===================================================== -->
 
-    <p id="noResults" class="no-results hidden">
-      該当する用語が見つかりませんでした。
-    </p>
+<article
+  class="glossary-card"
+  data-keywords="form フォーム action method get post html"
+>
+  <h2>form要素</h2>
+  <p class="reading">HTML FORM</p>
+
+  <p>
+    利用者が入力したデータをServletなどへ
+    送信するためのHTML要素。
+  </p>
+
+  <p class="exam-point">
+    <code>action</code>に送信先、
+    <code>method</code>にGETまたはPOSTを指定する。<br>
+
+    例：
+    <code>&lt;form action="Register" method="post"&gt;</code>
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="action form フォーム 送信先 servlet url"
+>
+  <h2>action属性</h2>
+  <p class="reading">FORM ACTION</p>
+
+  <p>
+    フォームデータの送信先を指定する属性。
+    ServletのURLパターンなどを指定する。
+  </p>
+
+  <p class="exam-point">
+    例：
+    <code>action="Register"</code><br>
+
+    <code>@WebServlet("/Register")</code>のServletと
+    対応させる。
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="method form フォーム get post リクエストメソッド"
+>
+  <h2>method属性</h2>
+  <p class="reading">FORM METHOD</p>
+
+  <p>
+    フォームをGETとPOSTのどちらで送信するか指定する属性。
+  </p>
+
+  <p class="exam-point">
+    GET送信：
+    <code>method="get"</code><br>
+
+    POST送信：
+    <code>method="post"</code>
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="name attribute フォーム name属性 getparameter パラメータ名 input"
+>
+  <h2>name属性</h2>
+  <p class="reading">FORM CONTROL NAME</p>
+
+  <p>
+    フォーム部品の送信データへ名前を付ける属性。
+    リクエストパラメータ名として使われる。
+  </p>
+
+  <p class="exam-point">
+    HTML：
+    <code>&lt;input name="age"&gt;</code><br>
+
+    Java：
+    <code>request.getParameter("age")</code><br>
+
+    両方の名前を一致させる。
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="anchor アンカー a href link リンク get servlet"
+>
+  <h2>アンカー</h2>
+  <p class="reading">ANCHOR・LINK</p>
+
+  <p>
+    HTMLの<code>&lt;a&gt;</code>要素。
+    リンクからServletへアクセスすると、
+    基本的にGETリクエストになる。
+  </p>
+
+  <p class="exam-point">
+    例：
+    <code>&lt;a href="Menu"&gt;メニューへ&lt;/a&gt;</code>
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="query string クエリ文字列 get url parameter パラメータ"
+>
+  <h2>クエリ文字列</h2>
+  <p class="reading">QUERY STRING</p>
+
+  <p>
+    GETリクエストで、URLの末尾へ付加される
+    パラメータ部分。
+  </p>
+
+  <p class="exam-point">
+    例：
+    <code>Detail?id=10&amp;mode=edit</code><br>
+
+    最初のパラメータは<code>?</code>、
+    2つ目以降は<code>&amp;</code>で区切る。
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="url pattern urlパターン webservlet servlet mapping 実行"
+>
+  <h2>URLパターン</h2>
+  <p class="reading">URL PATTERN</p>
+
+  <p>
+    ブラウザからのURLと、
+    実行するServletクラスを対応させるための指定。
+  </p>
+
+  <p class="exam-point">
+    <code>@WebServlet("/Login")</code>なら、
+    WebアプリケーションのURLに続けて
+    <code>/Login</code>へアクセスする。
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="override オーバーライド doget dopost servlet 継承"
+>
+  <h2>オーバーライド</h2>
+  <p class="reading">OVERRIDE</p>
+
+  <p>
+    親クラスから継承したメソッドを、
+    子クラス側で同じ形式で定義し直すこと。
+  </p>
+
+  <p class="exam-point">
+    HttpServletを継承したクラスで、
+    <code>doGet()</code>や<code>doPost()</code>を
+    オーバーライドする。<br>
+
+    <code>@Override</code>を付けることが多い。
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="getparameter getattribute 違い request パラメータ 属性"
+>
+  <h2>getParameterとgetAttributeの違い</h2>
+  <p class="reading">PARAMETER VS ATTRIBUTE</p>
+
+  <p>
+    <code>getParameter()</code>はフォームやURLから
+    送信された値を取得する。
+    <code>getAttribute()</code>はスコープへ保存した
+    オブジェクトを取得する。
+  </p>
+
+  <p class="exam-point">
+    送信値：
+    <code>request.getParameter("age")</code><br>
+
+    保存済み属性：
+    <code>request.getAttribute("user")</code>
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="string getparameter 戻り値 型変換 parseint int"
+>
+  <h2>getParameterの戻り値</h2>
+  <p class="reading">STRING VALUE</p>
+
+  <p>
+    <code>request.getParameter()</code>で取得した値は、
+    基本的に<code>String</code>型になる。
+  </p>
+
+  <p class="exam-point">
+    数値として計算する場合は型変換する。<br>
+
+    <code>
+      int age =
+      Integer.parseInt(request.getParameter("age"));
+    </code>
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="requestdispatcher forward フォワード 構文 転送先"
+>
+  <h2>フォワードの基本構文</h2>
+  <p class="reading">FORWARD SYNTAX</p>
+
+  <p>
+    RequestDispatcherを取得し、
+    requestとresponseを転送する。
+  </p>
+
+  <p class="exam-point">
+    <code>
+      RequestDispatcher dispatcher =
+      request.getRequestDispatcher(
+      "/WEB-INF/jsp/result.jsp");
+    </code><br>
+
+    <code>
+      dispatcher.forward(request, response);
+    </code>
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="forward redirect 違い フォワード リダイレクト url"
+>
+  <h2>フォワードとリダイレクトの違い</h2>
+  <p class="reading">FORWARD VS REDIRECT</p>
+
+  <p>
+    フォワードはサーバー内部の転送。
+    リダイレクトはブラウザへ再リクエストさせる処理。
+  </p>
+
+  <p class="exam-point">
+    フォワード：URLは基本的に変わらない。<br>
+    リダイレクト：移動先のURLへ変わる。<br>
+    リクエストスコープをJSPへ渡す場合は
+    フォワードが適している。
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="jsp 実行 servlet forward フォワード web server"
+>
+  <h2>JSPの実行</h2>
+  <p class="reading">JSP EXECUTION</p>
+
+  <p>
+    JSPはWebサーバー上で処理され、
+    最終的にHTMLなどのレスポンスを返す。
+  </p>
+
+  <p class="exam-point">
+    MVC構成では、ブラウザからJSPへ直接アクセスするより、
+    Servletで処理してからJSPへフォワードする形が基本。
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="jsp 必要性 servlet html println view 表示"
+>
+  <h2>JSPの必要性</h2>
+  <p class="reading">WHY JSP?</p>
+
+  <p>
+    Servletで<code>println()</code>を使って
+    大量のHTMLを生成すると、
+    Javaコードと表示コードが混ざって複雑になる。
+  </p>
+
+  <p class="exam-point">
+    JSPを使うとHTMLを中心に画面を作成できる。
+    MVCではJSPをViewとして利用する。
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="mvc flow 処理の流れ servlet javabeans jsp forward"
+>
+  <h2>MVCの処理の流れ</h2>
+  <p class="reading">MVC FLOW</p>
+
+  <p>
+    Servletがリクエストを受け、
+    必要な処理やデータ作成を行い、
+    JSPへフォワードして画面を表示する。
+  </p>
+
+  <p class="exam-point">
+    基本の流れ：<br>
+
+    ブラウザ<br>
+    ↓ リクエスト<br>
+    Servlet（Controller）<br>
+    ↓ JavaBeansをスコープへ保存<br>
+    JSP（View）<br>
+    ↓ レスポンス<br>
+    ブラウザ
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="instance インスタンス javabeans new scope setattribute"
+>
+  <h2>インスタンスをスコープへ保存</h2>
+  <p class="reading">STORE AN INSTANCE</p>
+
+  <p>
+    ServletでJavaBeansなどのインスタンスを作成し、
+    リクエストスコープへ保存する。
+  </p>
+
+  <p class="exam-point">
+    <code>User user = new User();</code><br>
+    <code>user.setName(name);</code><br>
+    <code>request.setAttribute("user", user);</code>
+  </p>
+</article>
+
+<article
+  class="glossary-card"
+  data-keywords="cast キャスト object getattribute javabeans 型変換"
+>
+  <h2>キャスト</h2>
+  <p class="reading">CAST</p>
+
+  <p>
+    <code>getAttribute()</code>の戻り値は基本的に
+    <code>Object</code>型なので、
+    元の型として扱う場合に型変換する。
+  </p>
+
+  <p class="exam-point">
+    <code>
+      User user =
+      (User) request.getAttribute("user");
+    </code>
+  </p>
+</article>
+
   </main>
 
   <footer class="site-footer">

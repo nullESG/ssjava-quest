@@ -787,6 +787,603 @@ const categoryNames = {
   beans: "JavaBeans・型変換"
 };
 /* =========================================================
+   試験範囲修正
+
+   今回の試験範囲に含まれないもの：
+   ・セッションスコープ
+   ・アプリケーションスコープ
+
+   上記を含む問題を出題データから削除する。
+========================================================= */
+
+const excludedQuestionIds = new Set([
+  "scope-04",
+  "scope-05",
+  "scope-w02"
+]);
+
+for (let i = quizData.length - 1; i >= 0; i--) {
+  if (excludedQuestionIds.has(quizData[i].id)) {
+    quizData.splice(i, 1);
+  }
+}
+
+/* =========================================================
+   試験範囲内の追加問題
+
+   範囲外を削除した代わりに、
+   Servlet・JSP・MVC・フォワード・
+   リクエストスコープなどを強化する。
+========================================================= */
+
+quizData.push(
+  /* =======================================================
+     Servletの基本・追加問題
+  ======================================================= */
+
+  C(
+    "servlet-add-01",
+    "servlet",
+    "<code>doGet()</code>の引数として基本的に受け取る2つのオブジェクトはどれ？",
+    [
+      "HttpServletRequestとHttpServletResponse",
+      "HttpSessionとPrintWriter",
+      "StringとInteger",
+      "JSPとHTML"
+    ],
+    0,
+    "<code>doGet(HttpServletRequest request, HttpServletResponse response)</code>のように、リクエストとレスポンスを引数として受け取ります。"
+  ),
+
+  C(
+    "servlet-add-02",
+    "servlet",
+    "<code>doPost()</code>をオーバーライドしているServletへ、GETリクエストだけを送った場合の説明として適切なものはどれ？",
+    [
+      "通常、作成したdoPost()の処理は実行されない",
+      "必ずdoPost()が実行される",
+      "自動的にJSPへフォワードされる",
+      "必ずdoGet()が自動生成される"
+    ],
+    0,
+    "GETとPOSTでは呼び出されるメソッドが異なります。POST用の処理を実行したい場合は、フォームなどからPOSTリクエストを送る必要があります。"
+  ),
+
+  C(
+    "servlet-add-03",
+    "servlet",
+    "<code>@WebServlet(\"/Sample\")</code>を指定したServletへアクセスするURLとして、確認すべき部分はどれ？",
+    [
+      "URL末尾の/Sample",
+      "Javaファイルのコメント数",
+      "CSSのファイル名",
+      "変数のデータ型だけ"
+    ],
+    0,
+    "URLパターンが<code>/Sample</code>なら、Webアプリケーションのコンテキストパスに続けて<code>/Sample</code>へアクセスします。"
+  ),
+
+  C(
+    "servlet-add-04",
+    "servlet",
+    "Servletを修正したのに以前の実行結果が表示される場合、確認事項として最も適切なものはどれ？",
+    [
+      "修正内容がサーバーへ反映されているか確認する",
+      "必ずパソコンを買い替える",
+      "HTMLをすべて削除する",
+      "URLパターンを毎回ランダムにする"
+    ],
+    0,
+    "Servletの修正後は、サーバーへの再反映・再公開や再起動が必要な場合があります。正しいURLへアクセスしているかも確認します。"
+  ),
+
+  W(
+    "servlet-add-w01",
+    "servlet",
+    "GETリクエストを処理する<code>doGet()</code>の基本的なメソッド宣言を書きなさい。",
+    "protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException",
+    [
+      ["protected"],
+      ["void"],
+      ["doget"],
+      ["httpservletrequest"],
+      ["httpservletresponse"]
+    ],
+    "基本形は<code>protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException</code>です。教材の書き方に合わせて記述できるようにしましょう。"
+  ),
+
+  /* =======================================================
+     フォーム・リクエスト処理の追加問題
+  ======================================================= */
+
+  C(
+    "request-add-01",
+    "request",
+    "HTMLフォームの<code>action</code>属性には、基本的に何を指定する？",
+    [
+      "送信先のURL",
+      "入力欄の文字色",
+      "リクエストの戻り値",
+      "JavaBeansのプロパティ型"
+    ],
+    0,
+    "<code>action</code>属性にはフォームデータの送信先を指定します。ServletのURLパターンを送信先にすることがあります。"
+  ),
+
+  C(
+    "request-add-02",
+    "request",
+    "<code>request.getParameter(\"userName\")</code>で値を取得するため、HTMLの入力欄に必要な指定はどれ？",
+    [
+      "name=\"userName\"",
+      "class=\"userName\"",
+      "id=\"userName\"だけ",
+      "method=\"userName\""
+    ],
+    0,
+    "getParameterの引数は、フォーム部品の<code>name</code>属性と対応します。id属性だけではリクエストパラメータ名になりません。"
+  ),
+
+  C(
+    "request-add-03",
+    "request",
+    "次のうち、リンクからパラメータ<code>id=10</code>をGET送信する記述として適切なものはどれ？",
+    [
+      "<a href=\"Detail?id=10\">詳細</a>",
+      "<a method=\"post\">詳細</a>",
+      "<form href=\"id=10\">詳細</form>",
+      "<jsp id=\"10\">詳細</jsp>"
+    ],
+    0,
+    "URLの<code>?</code>以降へ<code>名前=値</code>を記述すると、クエリ文字列としてGET送信できます。"
+  ),
+
+  C(
+    "request-add-04",
+    "request",
+    "複数のGETパラメータをURLへ付けるとき、2つ目以降のパラメータを区切る記号はどれ？",
+    [
+      "&",
+      "#",
+      "%",
+      ":"
+    ],
+    0,
+    "<code>Search?keyword=java&page=2</code>のように、最初は<code>?</code>、2つ目以降は<code>&amp;</code>で区切ります。"
+  ),
+
+  W(
+    "request-add-w01",
+    "request",
+    "<code>name</code>という名前の入力欄をPOST送信で<code>Register</code>へ送る、基本的なHTMLフォームを書きなさい。",
+    "<form action=\"Register\" method=\"post\"><input type=\"text\" name=\"name\"><button type=\"submit\">送信</button></form>",
+    [
+      ["<form"],
+      ["action=\"register\"", "action='register'"],
+      ["method=\"post\"", "method='post'"],
+      ["name=\"name\"", "name='name'"]
+    ],
+    "重要なのは、formの<code>action</code>と<code>method</code>、入力欄の<code>name</code>です。"
+  ),
+
+  W(
+    "request-add-w02",
+    "request",
+    "フォーム部品の<code>name</code>属性と、<code>request.getParameter()</code>の関係を説明しなさい。",
+    "フォーム部品のname属性がリクエストパラメータ名になり、getParameterの引数へ同じ名前を指定して値を取得する。",
+    [
+      ["name"],
+      ["getparameter"],
+      ["同じ", "対応"]
+    ],
+    "例えば<code>name=\"age\"</code>なら、<code>request.getParameter(\"age\")</code>で値を取得します。"
+  ),
+
+  /* =======================================================
+     レスポンス・HTML生成の追加問題
+  ======================================================= */
+
+  C(
+    "response-add-01",
+    "response",
+    "ServletでHTMLを出力する前に、文字化け対策として行う設定はどれ？",
+    [
+      "Content-Typeと文字コードを設定する",
+      "URLパターンを削除する",
+      "doGet()をmain()へ変更する",
+      "JSPコメントを追加する"
+    ],
+    0,
+    "<code>response.setContentType(\"text/html; charset=UTF-8\");</code>のように設定します。"
+  ),
+
+  C(
+    "response-add-02",
+    "response",
+    "Servletから見出し「結果」をHTMLとして出力する記述はどれ？",
+    [
+      "out.println(\"<h1>結果</h1>\");",
+      "request.getParameter(\"<h1>結果</h1>\");",
+      "response.sendRedirect(\"<h1>結果</h1>\");",
+      "dispatcher.forward(\"<h1>結果</h1>\");"
+    ],
+    0,
+    "PrintWriterを取得し、<code>out.println()</code>などを使ってHTML文字列を出力します。"
+  ),
+
+  C(
+    "response-add-03",
+    "response",
+    "リダイレクトの説明として正しいものはどれ？",
+    [
+      "ブラウザへ移動先への再リクエストを指示する",
+      "サーバー内部だけでJSPを実行する",
+      "リクエストパラメータをintへ変換する",
+      "JavaBeansを自動生成する"
+    ],
+    0,
+    "リダイレクトではレスポンスを受け取ったブラウザが、指定された移動先へ新しいリクエストを送ります。"
+  ),
+
+  W(
+    "response-add-w01",
+    "response",
+    "ServletからHTMLを出力するために、Content-Typeを設定してPrintWriterを取得するコードを書きなさい。",
+    "response.setContentType(\"text/html; charset=UTF-8\"); PrintWriter out = response.getWriter();",
+    [
+      ["response.setcontenttype"],
+      ["text/html"],
+      ["utf-8", "utf8"],
+      ["printwriter"],
+      ["response.getwriter"]
+    ],
+    "Content-Typeを設定した後、<code>response.getWriter()</code>でPrintWriterを取得します。"
+  ),
+
+  /* =======================================================
+     JSPの追加問題
+  ======================================================= */
+
+  C(
+    "jsp-add-01",
+    "jsp",
+    "JSPが必要とされる理由として適切なものはどれ？",
+    [
+      "ServletのprintlnだけでHTMLを作るより、画面を記述しやすい",
+      "Servletを一切使えなくするため",
+      "GETとPOSTを同じものにするため",
+      "JavaBeansを削除するため"
+    ],
+    0,
+    "ServletでHTMLを1行ずつ出力すると、画面が複雑になるほど保守しにくくなります。JSPを使うとHTML中心で画面を記述できます。"
+  ),
+
+  C(
+    "jsp-add-02",
+    "jsp",
+    "スクリプト式<code>&lt;%= name %&gt;</code>について正しい説明はどれ？",
+    [
+      "nameの値を画面へ出力する",
+      "nameというServletを実行する",
+      "nameをリダイレクト先にする",
+      "nameを必ずintへ変換する"
+    ],
+    0,
+    "スクリプト式は、式を評価した結果をレスポンスへ出力します。"
+  ),
+
+  C(
+    "jsp-add-03",
+    "jsp",
+    "次のうち、JSPコメントとHTMLコメントの違いとして正しいものはどれ？",
+    [
+      "JSPコメントは生成されるHTMLに含まれない",
+      "JSPコメントは必ずブラウザへ表示される",
+      "HTMLコメントでは文字を書けない",
+      "両者はJavaクラスを継承する"
+    ],
+    0,
+    "JSPコメント<code>&lt;%-- --%&gt;</code>は、JSPの処理段階で除かれるため、ブラウザへ返すHTMLに含まれません。"
+  ),
+
+  C(
+    "jsp-add-04",
+    "jsp",
+    "JSPファイルをWebサーバー上で実行する方法として適切なものはどれ？",
+    [
+      "JSPへアクセスするか、Servletからフォワードする",
+      "Javaのmain()だけを実行する",
+      "CSSとして読み込む",
+      "画像ファイルへ変換する"
+    ],
+    0,
+    "JSPはWebサーバー上で処理されます。MVC構成ではServletからJSPへフォワードする形が基本です。"
+  ),
+
+  W(
+    "jsp-add-w01",
+    "jsp",
+    "JSPが必要とされる理由を、ServletによるHTML生成と比較して説明しなさい。",
+    "Servletでprintlnを使って大量のHTMLを生成すると画面の記述が複雑になるため、JSPを使ってHTML中心に表示部分を作成する。",
+    [
+      ["servlet"],
+      ["html"],
+      ["jsp"],
+      ["表示", "画面"]
+    ],
+    "「ServletだけではHTML生成が複雑」「JSPならHTML中心に表示を作れる」という比較がポイントです。"
+  ),
+
+  /* =======================================================
+     MVCの追加問題
+  ======================================================= */
+
+  C(
+    "mvc-add-01",
+    "mvc",
+    "Servletがリクエストを受け、JavaBeansを作成し、JSPへフォワードする構成で、Servletの役割はどれ？",
+    [
+      "Controller",
+      "View",
+      "HTMLコメント",
+      "プロパティ"
+    ],
+    0,
+    "Servletはリクエストを受けて処理の流れを制御するため、Controllerを担当します。"
+  ),
+
+  C(
+    "mvc-add-02",
+    "mvc",
+    "MVCでJSPへ担当させる処理として最も適切なものはどれ？",
+    [
+      "受け取ったデータを使った画面表示",
+      "すべての業務処理",
+      "URLパターンのアノテーション設定",
+      "Servletクラスの継承"
+    ],
+    0,
+    "JSPはViewとして画面表示を担当します。複雑な処理はServletやModel側へ分けるのが基本です。"
+  ),
+
+  W(
+    "mvc-add-w01",
+    "mvc",
+    "Servlet・JavaBeans・JSPを使うMVCの基本的な処理の流れを説明しなさい。",
+    "Servletがリクエストを受けて処理を制御し、必要なデータをJavaBeansにまとめてスコープへ保存し、JSPへフォワードして表示する。",
+    [
+      ["servlet"],
+      ["javabeans", "beans", "bean"],
+      ["スコープ", "setattribute"],
+      ["jsp"],
+      ["フォワード", "forward"]
+    ],
+    "ControllerであるServletが処理し、データをModelへまとめ、ViewであるJSPへフォワードして表示する流れを覚えましょう。"
+  ),
+
+  /* =======================================================
+     フォワード・直接アクセス禁止の追加問題
+  ======================================================= */
+
+  C(
+    "forward-add-01",
+    "forward",
+    "ServletからJSPへデータを渡して表示する場合、リダイレクトよりフォワードが適している主な理由はどれ？",
+    [
+      "同じリクエストを使ってリクエストスコープのデータを渡せる",
+      "必ずURLをJSPのURLへ変更できる",
+      "Stringが自動的にintへ変わる",
+      "JSPがServletを継承しなくなる"
+    ],
+    0,
+    "フォワードでは同じリクエストが転送されるため、Servletがリクエストスコープへ保存したデータをJSPで取得できます。"
+  ),
+
+  C(
+    "forward-add-02",
+    "forward",
+    "JSPを<code>WEB-INF</code>内へ配置する理由として最も適切なものはどれ？",
+    [
+      "ブラウザからJSPへ直接リクエストされるのを防ぐ",
+      "JSPを画像として表示する",
+      "GETをPOSTへ自動変換する",
+      "JavaBeansを不要にする"
+    ],
+    0,
+    "JSPへ直接アクセスさせず、Servletで必要な処理を行ってからフォワードする構成にできます。"
+  ),
+
+  C(
+    "forward-add-03",
+    "forward",
+    "次のうち、フォワードの基本的な呼び出しとして正しいものはどれ？",
+    [
+      "dispatcher.forward(request, response);",
+      "response.forward(dispatcher);",
+      "request.sendRedirect(dispatcher);",
+      "out.forward(request);"
+    ],
+    0,
+    "RequestDispatcherを取得した後、<code>dispatcher.forward(request, response);</code>を実行します。"
+  ),
+
+  C(
+    "forward-add-04",
+    "forward",
+    "フォワード先を<code>/WEB-INF/jsp/result.jsp</code>にする記述として正しいものはどれ？",
+    [
+      "request.getRequestDispatcher(\"/WEB-INF/jsp/result.jsp\")",
+      "request.getParameter(\"/WEB-INF/jsp/result.jsp\")",
+      "response.setContentType(\"/WEB-INF/jsp/result.jsp\")",
+      "Integer.parseInt(\"/WEB-INF/jsp/result.jsp\")"
+    ],
+    0,
+    "<code>getRequestDispatcher()</code>へフォワード先のパスを指定します。"
+  ),
+
+  W(
+    "forward-add-w01",
+    "forward",
+    "JSPへの直接リクエストを禁止する理由と、そのためのJSP配置場所を説明しなさい。",
+    "処理前のJSPへ直接アクセスされるのを防ぎ、Servletを経由させるため、JSPをWEB-INFフォルダ内へ配置する。",
+    [
+      ["直接"],
+      ["servlet"],
+      ["web-inf"]
+    ],
+    "JSPをWEB-INF内へ配置し、Servletからフォワードして表示する構成を説明できるようにしましょう。"
+  ),
+
+  /* =======================================================
+     リクエストスコープの追加問題
+  ======================================================= */
+
+  C(
+    "scope-add-01",
+    "scope",
+    "<code>request.setAttribute(\"message\", message)</code>の第1引数<code>\"message\"</code>は何を表す？",
+    [
+      "データを保存・取得するときに使う名前",
+      "必ず表示されるHTML",
+      "URLパターン",
+      "リクエストメソッド"
+    ],
+    0,
+    "第1引数は属性名です。取得するときも同じ名前を指定して<code>getAttribute(\"message\")</code>を使います。"
+  ),
+
+  C(
+    "scope-add-02",
+    "scope",
+    "<code>getParameter()</code>と<code>getAttribute()</code>の違いとして正しいものはどれ？",
+    [
+      "getParameterは送信値、getAttributeはスコープへ保存した値を取得する",
+      "どちらも必ずintを返す",
+      "どちらもリダイレクトする",
+      "getAttributeはHTMLの色を取得する"
+    ],
+    0,
+    "getParameterはフォームなどから送信されたリクエストパラメータ、getAttributeはスコープへ保存した属性を取得します。"
+  ),
+
+  C(
+    "scope-add-03",
+    "scope",
+    "リクエストスコープへ保存したJavaBeansをJSPで取得するとき、取得名は何と対応させる必要がある？",
+    [
+      "setAttribute()の第1引数",
+      "@WebServletのURLだけ",
+      "doGet()の戻り値",
+      "Content-Typeだけ"
+    ],
+    0,
+    "<code>setAttribute(\"user\", user)</code>で保存したなら、JSP側でも<code>getAttribute(\"user\")</code>のように同じ名前を使います。"
+  ),
+
+  C(
+    "scope-add-04",
+    "scope",
+    "Servletがリクエストスコープへデータを保存した後の画面遷移として適切なものはどれ？",
+    [
+      "同じリクエストを渡せるフォワード",
+      "必ずリダイレクト",
+      "必ずアンカーリンク",
+      "JavaBeansの削除"
+    ],
+    0,
+    "リクエストスコープは1回のリクエスト内で共有します。そのため、ServletからJSPへ渡す場合はフォワードが適しています。"
+  ),
+
+  W(
+    "scope-add-w01",
+    "scope",
+    "<code>request.setAttribute()</code>と<code>request.getAttribute()</code>の役割を説明しなさい。",
+    "setAttributeは名前を付けてリクエストスコープへデータを保存し、getAttributeは同じ名前を指定して保存したデータを取得する。",
+    [
+      ["setattribute"],
+      ["保存"],
+      ["getattribute"],
+      ["取得"]
+    ],
+    "保存時と取得時で同じ属性名を使う点も重要です。"
+  ),
+
+  W(
+    "scope-add-w02",
+    "scope",
+    "リクエストパラメータとリクエストスコープの違いを説明しなさい。",
+    "リクエストパラメータはフォームなどから送信された文字列データで、リクエストスコープはServletなどがsetAttributeでオブジェクトを保存して処理間で共有する仕組みである。",
+    [
+      ["パラメータ"],
+      ["フォーム", "送信"],
+      ["スコープ"],
+      ["setattribute", "属性"]
+    ],
+    "getParameterで取得する送信値と、setAttribute・getAttributeで共有する属性を区別しましょう。"
+  ),
+
+  /* =======================================================
+     JavaBeans・型変換の追加問題
+  ======================================================= */
+
+  C(
+    "beans-add-01",
+    "beans",
+    "JavaBeansでnameプロパティを定義するとき、一般的に用意する組み合わせはどれ？",
+    [
+      "getName()とsetName()",
+      "doGet()とdoPost()",
+      "forward()とsendRedirect()",
+      "println()とgetWriter()"
+    ],
+    0,
+    "nameプロパティのgetterは<code>getName()</code>、setterは<code>setName()</code>です。"
+  ),
+
+  C(
+    "beans-add-02",
+    "beans",
+    "<code>Integer.parseInt(request.getParameter(\"age\"))</code>が行っている処理はどれ？",
+    [
+      "ageの送信値を取得し、intへ変換する",
+      "ageというJSPへフォワードする",
+      "ageをリクエストスコープへ保存する",
+      "ageをURLパターンにする"
+    ],
+    0,
+    "getParameterでStringとして取得し、Integer.parseIntでint型へ変換しています。"
+  ),
+
+  C(
+    "beans-add-03",
+    "beans",
+    "フォームから送信された文字列<code>\"20\"</code>を数値計算へ使う場合に必要な処理はどれ？",
+    [
+      "用途に応じて数値型へ変換する",
+      "必ずJSPコメントへ変更する",
+      "必ずリダイレクトする",
+      "URLパターンとして登録する"
+    ],
+    0,
+    "getParameterの戻り値はStringです。整数として扱うならInteger.parseIntなどで型変換します。"
+  ),
+
+  W(
+    "beans-add-w01",
+    "beans",
+    "nameプロパティを持つJavaBeansのgetterとsetterの基本的なメソッド宣言を書きなさい。",
+    "public String getName() { return name; } public void setName(String name) { this.name = name; }",
+    [
+      ["getname"],
+      ["return"],
+      ["setname"],
+      ["this.name", "name="]
+    ],
+    "getterは値を返し、setterは引数で受け取った値をプロパティへ設定します。"
+  )
+);
+
+/* =========================================================
    保存データ
 ========================================================= */
 

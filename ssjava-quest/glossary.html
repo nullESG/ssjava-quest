@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="サーバーサイドJava実習①の試験対策用語集"
+    >
+
+    <meta name="theme-color" content="#080c17">
+
+    <title>重要用語集 | SSJava QUEST</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/glossary.js" defer></script>
+</head>
+
+<body>
+<header class="header">
+    <a href="./index.html" class="logo">
+        <span>☕</span>
+
+        <div>
+            <strong>SSJava QUEST</strong>
+            <small>サーバーサイドJava実習①</small>
+        </div>
+    </a>
+
+    <nav>
+        <a href="./index.html">クイズ</a>
+        <a href="./glossary.html" class="active">用語集</a>
+    </nav>
+</header>
+
+<main>
+    <section class="glossary-hero">
+        <p class="label">EXAM KEYWORDS</p>
+
+        <h1>
+            試験に出やすい<br>
+            <span>重要用語集</span>
+        </h1>
+
+        <p>
+            用語の名前だけでなく、「何のために使うか」
+            「似た用語と何が違うか」まで説明できるようにしましょう。
+        </p>
+    </section>
+
+    <section class="glossary-controls">
+        <label class="search-box">
+            <span>🔍</span>
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="用語・コード・説明を検索"
+                autocomplete="off"
+            >
+        </label>
+
+        <div class="filter-list">
+            <button
+                class="filter-button active"
+                data-category="all"
+                type="button"
+            >
+                すべて
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="servlet"
+                type="button"
+            >
+                Servlet
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="jsp"
+                type="button"
+            >
+                JSP
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="mvc"
+                type="button"
+            >
+                MVC・転送
+            </button>
+
+            <button
+                class="filter-button"
+                data-category="scope"
+                type="button"
+            >
+                スコープ
+            </button>
+        </div>
+    </section>
+
+    <p class="term-count">
+        <strong id="termCount">0</strong>件の用語
+    </p>
+
+    <section
+        id="glossaryList"
+        class="glossary-list"
+        aria-live="polite"
+    ></section>
+
+    <section id="emptyGlossary" class="message-card hidden">
+        <div class="large-icon">🔍</div>
+        <h2>用語が見つかりません</h2>
+        <p>検索語やカテゴリーを変更してください。</p>
+    </section>
+
+    <aside class="package-note">
+        <h2>⚠️ `javax` と `jakarta` の違い</h2>
+
+        <p>
+            教材やTomcatのバージョンによって、Servlet APIの
+            パッケージ名が異なる場合があります。
+        </p>
+
+        <div class="package-grid">
+            <div>
+                <small>旧教材・Tomcat 9以前など</small>
+                <code>javax.servlet.*</code>
+            </div>
+
+            <div>
+                <small>Jakarta EE・Tomcat 10以降など</small>
+                <code>jakarta.servlet.*</code>
+            </div>
+        </div>
+
+        <p>
+            試験では、授業で使用している教材や実行環境の書き方を
+            優先してください。基本的な役割や考え方は同じです。
+        </p>
+    </aside>
+</main>
+
+<footer>
+    SSJava QUEST ― 覚えるだけでなく説明できる状態を目指そう
+</footer>
+</body>
+</html>

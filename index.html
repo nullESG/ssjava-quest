@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#07111f">
+
+  <title>SSJava BATTLE｜サーバーサイドJava試験対策</title>
+
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+  <div class="background-grid" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a href="index.html" class="brand">
+      <span class="brand-icon">☕</span>
+
+      <span>
+        <strong>SSJava BATTLE</strong>
+        <small>定期考査⑥-1 対策</small>
+      </span>
+    </a>
+
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link active">クイズ</a>
+      <a href="glossary.html" class="nav-link">用語集</a>
+    </nav>
+  </header>
+
+  <main class="main-container">
+
+    <!-- =========================
+         ホーム画面
+    ========================== -->
+    <section id="homeScreen" class="screen">
+      <div class="hero-panel">
+        <div>
+          <p class="eyebrow">SERVER-SIDE JAVA TRAINING</p>
+
+          <h1>
+            試験範囲を<br>
+            <span class="gradient-text">直感でぶっ倒せ。</span>
+          </h1>
+
+          <p class="hero-description">
+            Servlet・JSP・MVC・フォワード・スコープを、
+            4択問題と記述問題でテンポよく攻略しよう。
+          </p>
+        </div>
+
+        <div class="hero-level" aria-label="習得率">
+          <div class="level-ring">
+            <span id="masteryPercent">0%</span>
+            <small>MASTER</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- 学習状況 -->
+      <section class="stats-grid" aria-label="学習状況">
+        <article class="stat-card">
+          <span class="stat-icon">⚔️</span>
+
+          <div>
+            <span class="stat-label">累計解答</span>
+            <strong id="totalAnswered">0</strong>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <span class="stat-icon">🎯</span>
+
+          <div>
+            <span class="stat-label">累計正解</span>
+            <strong id="totalCorrect">0</strong>
+          </div>
+        </article>
+
+        <article class="stat-card danger">
+          <span class="stat-icon">🔥</span>
+
+          <div>
+            <span class="stat-label">要復習</span>
+            <strong id="missedCount">0</strong>
+          </div>
+        </article>
+      </section>
+
+      <!-- カテゴリ選択 -->
+      <section class="control-panel">
+        <p class="eyebrow">SELECT CATEGORY</p>
+        <h2>出題範囲</h2>
+
+        <label for="categorySelect" class="select-label">
+          カテゴリを選択
+        </label>
+
+        <select id="categorySelect" class="category-select">
+          <option value="all">全範囲</option>
+          <option value="servlet">Servletの基本</option>
+          <option value="request">リクエスト処理</option>
+          <option value="response">レスポンス処理</option>
+          <option value="jsp">JSP</option>
+          <option value="mvc">MVCモデル</option>
+          <option value="forward">フォワード／リダイレクト</option>
+          <option value="scope">スコープ</option>
+          <option value="beans">JavaBeans・型変換</option>
+        </select>
+      </section>
+
+      <!-- モード選択 -->
+      <section class="mode-grid">
+        <button class="mode-card cyan" data-mode="choice">
+          <span class="mode-number">01</span>
+          <span class="mode-icon">🎮</span>
+
+          <strong>4択バトル</strong>
+
+          <small>
+            テンキー・数字キー1～4対応。<br>
+            基本からひっかけまで攻略。
+          </small>
+
+          <span class="mode-start">START →</span>
+        </button>
+
+        <button class="mode-card purple" data-mode="written">
+          <span class="mode-number">02</span>
+          <span class="mode-icon">✍️</span>
+
+          <strong>記述トレーニング</strong>
+
+          <small>
+            定義・役割・構文など、<br>
+            書かされやすい基礎を練習。
+          </small>
+
+          <span class="mode-start">START →</span>
+        </button>
+
+        <button class="mode-card gold" data-mode="challenge">
+          <span class="mode-number">03</span>
+          <span class="mode-icon">⚡</span>
+
+          <strong>ランダム10問</strong>
+
+          <small>
+            4択と記述を混ぜた、<br>
+            本番前のミニチャレンジ。
+          </small>
+
+          <span class="mode-start">START →</span>
+        </button>
+
+        <button
+          id="reviewButton"
+          class="mode-card red"
+          data-mode="review"
+        >
+          <span class="mode-number">04</span>
+          <span class="mode-icon">👹</span>
+
+          <strong>ミス復習</strong>
+
+          <small>
+            間違えた問題だけを、<br>
+            何度でも再戦できる。
+          </small>
+
+          <span class="mode-start">
+            <span id="reviewButtonCount">0</span>問待機中 →
+          </span>
+        </button>
+      </section>
+
+      <!-- 操作説明 -->
+      <section class="shortcut-panel">
+        <div>
+          <strong>⌨️ PCショートカット</strong>
+
+          <p>
+            4択問題では
+            <kbd>1</kbd>～<kbd>4</kbd>で選択、
+            <kbd>Enter</kbd>で解答・次の問題へ進みます。
+          </p>
+        </div>
+
+        <button id="resetButton" class="text-button">
+          学習記録をリセット
+        </button>
+      </section>
+    </section>
+
+    <!-- =========================
+         クイズ画面
+    ========================== -->
+    <section id="quizScreen" class="screen hidden">
+      <div class="quiz-topbar">
+        <button
+          id="quitButton"
+          class="icon-button"
+          type="button"
+          aria-label="クイズを終了"
+        >
+          ←
+        </button>
+
+        <div class="quiz-progress-area">
+          <div class="progress-info">
+            <span id="quizModeLabel">4択バトル</span>
+
+            <span>
+              <strong id="currentNumber">1</strong>
+              /
+              <span id="totalQuestions">10</span>
+            </span>
+          </div>
+
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="問題の進行状況"
+          >
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <article class="quiz-card">
+        <div class="question-tags">
+          <span id="categoryBadge" class="category-badge">
+            Servlet
+          </span>
+
+          <span id="questionTypeBadge" class="type-badge">
+            4択
+          </span>
+        </div>
+
+        <h2 id="questionText" class="question-text">
+          問題文
+        </h2>
+
+        <!-- 4択選択肢がJavaScriptで入る -->
+        <div id="choiceArea" class="choice-list"></div>
+
+        <!-- 記述問題 -->
+        <div id="writtenArea" class="written-area hidden">
+          <label for="writtenAnswer">解答を入力</label>
+
+          <textarea
+            id="writtenAnswer"
+            rows="5"
+            placeholder="ここに解答を入力してください。重要語句を含んでいるかで簡易判定します。"
+          ></textarea>
+
+          <p class="input-hint">
+            記述問題はキーワードによる簡易判定です。
+            解説と模範解答を見て、自分でも確認してください。
+          </p>
+        </div>
+
+        <!-- 未入力時の警告 -->
+        <p
+          id="validationMessage"
+          class="validation-message hidden"
+          aria-live="polite"
+        ></p>
+
+        <!-- 解答・解説 -->
+        <section
+          id="feedbackPanel"
+          class="feedback-panel hidden"
+          aria-live="polite"
+        >
+          <div class="feedback-heading">
+            <span id="feedbackIcon" class="feedback-icon">⭕</span>
+
+            <div>
+              <strong id="feedbackTitle">正解！</strong>
+              <p id="correctAnswerText"></p>
+            </div>
+          </div>
+
+          <div class="explanation-box">
+            <span>EXPLANATION</span>
+            <p id="explanationText"></p>
+          </div>
+
+          <!-- 記述問題の自己判定 -->
+          <div id="selfJudgeArea" class="self-judge hidden">
+            <p>
+              模範解答と比べて、自分で最終判定できます。
+            </p>
+
+            <div class="self-judge-buttons">
+              <button
+                id="markCorrectButton"
+                class="small-action correct"
+                type="button"
+              >
+                正解扱いにする
+              </button>
+
+              <button
+                id="markReviewButton"
+                class="small-action incorrect"
+                type="button"
+              >
+                要復習にする
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <div class="quiz-actions">
+          <button
+            id="submitButton"
+            class="primary-button"
+            type="button"
+          >
+            解答する
+          </button>
+
+          <button
+            id="nextButton"
+            class="primary-button next hidden"
+            type="button"
+          >
+            次の問題へ
+          </button>
+        </div>
+      </article>
+
+      <p class="keyboard-guide">
+        PC：数字キーで選択 ／ Enterで解答・次へ
+      </p>
+    </section>
+
+    <!-- =========================
+         結果画面
+    ========================== -->
+    <section id="resultScreen" class="screen hidden">
+      <article class="result-card">
+        <div id="resultRank" class="result-rank">A</div>
+
+        <p class="eyebrow">BATTLE RESULT</p>
+
+        <h2 id="resultTitle">お見事！</h2>
+
+        <div class="result-score">
+          <strong id="resultCorrect">0</strong>
+          <span>/</span>
+          <span id="resultTotal">0</span>
+        </div>
+
+        <p id="resultMessage" class="result-message"></p>
+
+        <div class="result-actions">
+          <button
+            id="retryButton"
+            class="primary-button"
+            type="button"
+          >
+            同じモードでもう一度
+          </button>
+
+          <button
+            id="homeButton"
+            class="secondary-button"
+            type="button"
+          >
+            メニューへ戻る
+          </button>
+
+          <button
+            id="resultReviewButton"
+            class="secondary-button danger-outline"
+            type="button"
+          >
+            間違いを復習
+          </button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      SSJava BATTLE｜
+      学習記録は使用中のブラウザに保存されます。
+    </p>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

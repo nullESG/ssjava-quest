@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#07111f">
+
+  <title>重要用語集｜SSJava BATTLE</title>
+
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+  <div class="background-grid" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a href="index.html" class="brand">
+      <span class="brand-icon">☕</span>
+
+      <span>
+        <strong>SSJava BATTLE</strong>
+        <small>定期考査⑥-1 対策</small>
+      </span>
+    </a>
+
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">クイズ</a>
+      <a href="glossary.html" class="nav-link active">用語集</a>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <section class="glossary-hero">
+      <p class="eyebrow">EXAM KEYWORDS</p>
+
+      <h1>
+        試験に出やすい<br>
+        <span class="gradient-text">重要用語集</span>
+      </h1>
+
+      <p>
+        Servlet・JSP・MVC・フォワード・スコープなど、
+        試験範囲の重要語句をまとめています。
+        説明問題で書けるように、意味と違いを確認しましょう。
+      </p>
+    </section>
+
+    <!-- 検索 -->
+    <section class="search-box">
+      <label for="glossarySearch" class="select-label">
+        用語を検索
+      </label>
+
+      <input
+        id="glossarySearch"
+        type="search"
+        inputmode="search"
+        autocomplete="off"
+        placeholder="例：Servlet、フォワード、スコープ、getParameter"
+      >
+    </section>
+
+    <p id="glossaryCount" class="glossary-count">
+      0件の用語を表示中
+    </p>
+
+    <!-- 用語一覧 -->
+    <section id="glossaryGrid" class="glossary-grid">
+
+      <article
+        class="glossary-card"
+        data-keywords="servlet サーブレット httpservlet java クラス"
+      >
+        <h2>Servlet</h2>
+        <p class="reading">サーブレット</p>
+
+        <p>
+          Webサーバー上で動作するJavaプログラム。
+          ブラウザからリクエストを受け取り、
+          必要な処理を行ってレスポンスを返す。
+        </p>
+
+        <p class="exam-point">
+          試験ポイント：
+          通常は<code>HttpServlet</code>を継承して作成する。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="httpservlet 継承 extends servlet"
+      >
+        <h2>HttpServlet</h2>
+        <p class="reading">エイチティーティーピー・サーブレット</p>
+
+        <p>
+          HTTP通信を扱うServletの基本クラス。
+          作成するServletクラスで継承する。
+        </p>
+
+        <p class="exam-point">
+          基本形：
+          <code>public class Sample extends HttpServlet</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="webservlet url pattern アノテーション urlパターン"
+      >
+        <h2>@WebServlet</h2>
+        <p class="reading">ウェブ・サーブレット</p>
+
+        <p>
+          ServletクラスとURLパターンを対応させる
+          アノテーション。
+        </p>
+
+        <p class="exam-point">
+          例：
+          <code>@WebServlet("/Login")</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="doget get servlet リクエスト メソッド"
+      >
+        <h2>doGet()</h2>
+        <p class="reading">ドゥー・ゲット</p>
+
+        <p>
+          GETリクエストを受けたときに実行される
+          Servletのメソッド。
+        </p>
+
+        <p class="exam-point">
+          検索・ページ表示・リンクからのアクセスなどで
+          GETが使われることが多い。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="dopost post servlet リクエスト メソッド"
+      >
+        <h2>doPost()</h2>
+        <p class="reading">ドゥー・ポスト</p>
+
+        <p>
+          POSTリクエストを受けたときに実行される
+          Servletのメソッド。
+        </p>
+
+        <p class="exam-point">
+          HTMLフォームでは
+          <code>method="post"</code>を指定する。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="get request url クエリ パラメータ"
+      >
+        <h2>GET</h2>
+        <p class="reading">ゲット・リクエスト</p>
+
+        <p>
+          主に情報を取得するときに使われる
+          リクエストメソッド。
+          送信データがURLへ付加される。
+        </p>
+
+        <p class="exam-point">
+          URLへデータが表示される点をPOSTと比較する。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="post request body url フォーム"
+      >
+        <h2>POST</h2>
+        <p class="reading">ポスト・リクエスト</p>
+
+        <p>
+          主に入力内容の登録や送信に使われる
+          リクエストメソッド。
+          データは主にリクエストボディへ格納される。
+        </p>
+
+        <p class="exam-point">
+          URLへデータが直接表示されない。
+          ただし、POSTだけで安全になるわけではない。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="request リクエスト httpservletrequest"
+      >
+        <h2>リクエスト</h2>
+        <p class="reading">HTTP REQUEST</p>
+
+        <p>
+          ブラウザなどのクライアントから、
+          Webサーバーへ送られる要求。
+        </p>
+
+        <p class="exam-point">
+          Servletでは通常、
+          <code>HttpServletRequest request</code>
+          で扱う。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="response レスポンス httpservletresponse"
+      >
+        <h2>レスポンス</h2>
+        <p class="reading">HTTP RESPONSE</p>
+
+        <p>
+          Webサーバーが処理結果として、
+          ブラウザなどへ返す応答。
+        </p>
+
+        <p class="exam-point">
+          Servletでは通常、
+          <code>HttpServletResponse response</code>
+          で扱う。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="getparameter リクエストパラメータ request string"
+      >
+        <h2>getParameter()</h2>
+        <p class="reading">リクエストパラメータ取得</p>
+
+        <p>
+          フォームやURLから送信された
+          リクエストパラメータを取得するメソッド。
+        </p>
+
+        <p class="exam-point">
+          <code>request.getParameter("name")</code><br>
+          戻り値は基本的に<code>String</code>。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="content-type contenttype charset utf-8 html response"
+      >
+        <h2>Content-Type</h2>
+        <p class="reading">コンテント・タイプ</p>
+
+        <p>
+          レスポンスで返すデータの種類や
+          文字コードをブラウザへ伝える情報。
+        </p>
+
+        <p class="exam-point">
+          <code>response.setContentType("text/html; charset=UTF-8");</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="printwriter getwriter println html response"
+      >
+        <h2>PrintWriter</h2>
+        <p class="reading">プリント・ライター</p>
+
+        <p>
+          Servletから文字列やHTMLを
+          レスポンスへ出力するために使う。
+        </p>
+
+        <p class="exam-point">
+          <code>PrintWriter out = response.getWriter();</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="jsp java server pages view 表示"
+      >
+        <h2>JSP</h2>
+        <p class="reading">JAVA SERVER PAGES</p>
+
+        <p>
+          HTMLを中心に画面表示を作成する技術。
+          MVCでは主にViewを担当する。
+        </p>
+
+        <p class="exam-point">
+          Servletで大量のHTMLを生成するより、
+          表示部分を作りやすい。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="スクリプトレット scriptlet jsp java 記号"
+      >
+        <h2>スクリプトレット</h2>
+        <p class="reading">SCRIPTLET</p>
+
+        <p>
+          JSPファイル内へJavaの文や
+          制御構文を記述するための領域。
+        </p>
+
+        <p class="exam-point">
+          記号：
+          <code>&lt;% Javaコード %&gt;</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="スクリプト式 expression jsp 出力"
+      >
+        <h2>スクリプト式</h2>
+        <p class="reading">JSP EXPRESSION</p>
+
+        <p>
+          Javaの式を評価し、その結果を
+          JSPの画面へ出力する。
+        </p>
+
+        <p class="exam-point">
+          記号：
+          <code>&lt;%= 式 %&gt;</code><br>
+          基本的に末尾へセミコロンを付けない。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="jspコメント comment コメント"
+      >
+        <h2>JSPコメント</h2>
+        <p class="reading">JSP COMMENT</p>
+
+        <p>
+          JSP内で使用するコメント。
+          生成されるレスポンスHTMLには含まれない。
+        </p>
+
+        <p class="exam-point">
+          記号：
+          <code>&lt;%-- コメント --%&gt;</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="pageディレクティブ page directive jsp charset"
+      >
+        <h2>pageディレクティブ</h2>
+        <p class="reading">PAGE DIRECTIVE</p>
+
+        <p>
+          JSPページ全体に関する設定を行う。
+          Content-Typeや文字コードなどを指定できる。
+        </p>
+
+        <p class="exam-point">
+          <code>&lt;%@ page contentType="text/html; charset=UTF-8" %&gt;</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="mvc model view controller モデル ビュー コントローラー"
+      >
+        <h2>MVCモデル</h2>
+        <p class="reading">MODEL・VIEW・CONTROLLER</p>
+
+        <p>
+          アプリケーションをModel・View・Controllerの
+          3つの役割へ分ける設計方法。
+        </p>
+
+        <p class="exam-point">
+          Servlet＝Controller、JSP＝View、
+          JavaBeansなど＝Modelとして使われる。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="model mvc モデル データ 業務処理"
+      >
+        <h2>Model</h2>
+        <p class="reading">モデル</p>
+
+        <p>
+          データや業務処理を担当する。
+          JavaBeansや処理用のJavaクラスなどが該当する。
+        </p>
+
+        <p class="exam-point">
+          「データと処理を担当」と説明できるようにする。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="view mvc ビュー jsp 表示 画面"
+      >
+        <h2>View</h2>
+        <p class="reading">ビュー</p>
+
+        <p>
+          利用者へ見せる画面表示を担当する。
+          ServletとJSPの構成では主にJSPが担当する。
+        </p>
+
+        <p class="exam-point">
+          Viewへ複雑な処理を書きすぎないことが基本。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="controller mvc コントローラー servlet 制御"
+      >
+        <h2>Controller</h2>
+        <p class="reading">コントローラー</p>
+
+        <p>
+          リクエストを受け取り、
+          必要な処理や表示先を決定する。
+        </p>
+
+        <p class="exam-point">
+          ServletとJSPの構成では、
+          主にServletがControllerを担当する。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="forward フォワード requestdispatcher url 転送"
+      >
+        <h2>フォワード</h2>
+        <p class="reading">FORWARD</p>
+
+        <p>
+          サーバー内部で、別のServletやJSPへ
+          リクエスト処理を転送する。
+        </p>
+
+        <p class="exam-point">
+          サーバー内部の転送なので、
+          ブラウザのURLは基本的に変わらない。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="requestdispatcher getrequestdispatcher forward"
+      >
+        <h2>RequestDispatcher</h2>
+        <p class="reading">リクエスト・ディスパッチャー</p>
+
+        <p>
+          Servletから別のServletやJSPへ
+          フォワードするときに利用する。
+        </p>
+
+        <p class="exam-point">
+          <code>request.getRequestDispatcher("転送先")</code><br>
+          <code>dispatcher.forward(request, response)</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="redirect リダイレクト sendredirect url 再リクエスト"
+      >
+        <h2>リダイレクト</h2>
+        <p class="reading">REDIRECT</p>
+
+        <p>
+          ブラウザへ移動先を伝え、
+          その移動先へ新しいリクエストを送らせる。
+        </p>
+
+        <p class="exam-point">
+          <code>response.sendRedirect("移動先")</code><br>
+          ブラウザのURLは移動先へ変わる。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="web-inf jsp 直接アクセス 禁止"
+      >
+        <h2>WEB-INF</h2>
+        <p class="reading">ウェブ・インフ</p>
+
+        <p>
+          Webアプリケーションの設定ファイルなどを
+          配置する特別なフォルダ。
+        </p>
+
+        <p class="exam-point">
+          JSPをWEB-INF内へ配置すると、
+          ブラウザからの直接アクセスを防げる。
+          Servletからフォワードして表示する。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="scope スコープ 共有範囲 データ"
+      >
+        <h2>スコープ</h2>
+        <p class="reading">SCOPE</p>
+
+        <p>
+          保存したデータを共有・利用できる範囲。
+          用途に応じて適切なスコープを選ぶ。
+        </p>
+
+        <p class="exam-point">
+          リクエスト・セッション・アプリケーションの
+          違いを説明できるようにする。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="request scope リクエストスコープ setattribute getattribute"
+      >
+        <h2>リクエストスコープ</h2>
+        <p class="reading">REQUEST SCOPE</p>
+
+        <p>
+          基本的に1回のリクエスト処理内で
+          データを共有するスコープ。
+        </p>
+
+        <p class="exam-point">
+          Servletからフォワード先のJSPへ
+          データを渡す場合に適している。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="session scope セッションスコープ ログイン 利用者"
+      >
+        <h2>セッションスコープ</h2>
+        <p class="reading">SESSION SCOPE</p>
+
+        <p>
+          同じ利用者の複数リクエスト間で
+          データを共有するスコープ。
+        </p>
+
+        <p class="exam-point">
+          ログイン情報や買い物かごなどで使われる。
+          不要になったデータは削除する。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="application scope アプリケーションスコープ servletcontext 全体"
+      >
+        <h2>アプリケーションスコープ</h2>
+        <p class="reading">APPLICATION SCOPE</p>
+
+        <p>
+          Webアプリケーション全体で
+          データを共有するスコープ。
+        </p>
+
+        <p class="exam-point">
+          複数の利用者から共有される。
+          共有範囲が非常に広い。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="setattribute 属性 保存 スコープ request"
+      >
+        <h2>setAttribute()</h2>
+        <p class="reading">属性の保存</p>
+
+        <p>
+          スコープへ名前を付けて
+          オブジェクトを保存するメソッド。
+        </p>
+
+        <p class="exam-point">
+          <code>request.setAttribute("user", user);</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="getattribute 属性 取得 スコープ request object"
+      >
+        <h2>getAttribute()</h2>
+        <p class="reading">属性の取得</p>
+
+        <p>
+          スコープへ保存されたオブジェクトを
+          名前を指定して取得するメソッド。
+        </p>
+
+        <p class="exam-point">
+          <code>request.getAttribute("user")</code><br>
+          戻り値は基本的に<code>Object</code>。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="javabeans beans bean プロパティ データ"
+      >
+        <h2>JavaBeans</h2>
+        <p class="reading">ジャバ・ビーンズ</p>
+
+        <p>
+          関連するデータをプロパティとしてまとめて扱う
+          Javaクラス。
+        </p>
+
+        <p class="exam-point">
+          プロパティは基本的にprivateとし、
+          getter・setterを使って操作する。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="property プロパティ フィールド javabeans"
+      >
+        <h2>プロパティ</h2>
+        <p class="reading">PROPERTY</p>
+
+        <p>
+          JavaBeansが持つ名前や年齢などのデータ。
+          getterとsetterを通して操作する。
+        </p>
+
+        <p class="exam-point">
+          nameプロパティなら
+          <code>getName()</code>と
+          <code>setName()</code>を用意する。
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="getter get 取得 javabeans プロパティ"
+      >
+        <h2>getter</h2>
+        <p class="reading">ゲッター</p>
+
+        <p>
+          JavaBeansのプロパティの値を
+          取得するためのメソッド。
+        </p>
+
+        <p class="exam-point">
+          nameプロパティなら
+          <code>public String getName()</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="setter set 設定 javabeans プロパティ"
+      >
+        <h2>setter</h2>
+        <p class="reading">セッター</p>
+
+        <p>
+          JavaBeansのプロパティへ
+          値を設定するためのメソッド。
+        </p>
+
+        <p class="exam-point">
+          nameプロパティなら
+          <code>public void setName(String name)</code>
+        </p>
+      </article>
+
+      <article
+        class="glossary-card"
+        data-keywords="parseint integer 型変換 string int 数値"
+      >
+        <h2>Integer.parseInt()</h2>
+        <p class="reading">文字列からintへの型変換</p>
+
+        <p>
+          数字を表すStringをint型へ変換する。
+        </p>
+
+        <p class="exam-point">
+          <code>int age = Integer.parseInt(ageText);</code><br>
+          数字以外の場合は例外が発生する可能性がある。
+        </p>
+      </article>
+
+    </section>
+
+    <p id="noResults" class="no-results hidden">
+      該当する用語が見つかりませんでした。
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      SSJava BATTLE｜
+      用語を自分の言葉で説明できるか確認しよう。
+    </p>
+  </footer>
+
+  <script>
+    "use strict";
+
+    const searchInput =
+      document.getElementById("glossarySearch");
+
+    const glossaryCards =
+      Array.from(
+        document.querySelectorAll(".glossary-card")
+      );
+
+    const glossaryCount =
+      document.getElementById("glossaryCount");
+
+    const noResults =
+      document.getElementById("noResults");
+
+    function normalizeSearchText(text) {
+      return String(text)
+        .toLowerCase()
+        .normalize("NFKC")
+        .replace(/\s+/g, "");
+    }
+
+    function updateGlossary() {
+      const keyword =
+        normalizeSearchText(searchInput.value);
+
+      let visibleCount = 0;
+
+      glossaryCards.forEach(card => {
+        const searchableText =
+          normalizeSearchText(
+            card.textContent +
+            " " +
+            card.dataset.keywords
+          );
+
+        const isVisible =
+          !keyword ||
+          searchableText.includes(keyword);
+
+        card.classList.toggle(
+          "hidden",
+          !isVisible
+        );
+
+        if (isVisible) {
+          visibleCount += 1;
+        }
+      });
+
+      glossaryCount.textContent =
+        `${visibleCount}件の用語を表示中`;
+
+      noResults.classList.toggle(
+        "hidden",
+        visibleCount !== 0
+      );
+    }
+
+    searchInput.addEventListener(
+      "input",
+      updateGlossary
+    );
+
+    updateGlossary();
+  </script>
+</body>
+</html>

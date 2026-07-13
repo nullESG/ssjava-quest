@@ -2156,6 +2156,775 @@ quizData.push(
 );
 
 /* =========================================================
+   授業板書反映・記述問題
+
+   基本構文・用語説明・処理の流れなど、
+   記述式で出題されやすい問題を追加する。
+
+   セッションスコープ・アプリケーションスコープは
+   含めない。
+========================================================= */
+
+quizData.push(
+  /* =======================================================
+     Webアプリケーションの全体像
+  ======================================================= */
+
+  W(
+    "board-web-w01",
+    "servlet",
+    "ブラウザからWebアプリケーションへアクセスして、画面が表示されるまでの基本的な流れを説明しなさい。",
+    "ブラウザがサーバーへリクエストを送り、Tomcat上でServletまたはJSPが実行され、その処理結果がHTMLなどのレスポンスとしてブラウザへ返される。",
+    [
+      ["ブラウザ", "クライアント"],
+      ["リクエスト"],
+      ["tomcat", "サーバー", "サーバ"],
+      ["servlet", "jsp"],
+      ["レスポンス"]
+    ],
+    "「ブラウザからリクエスト」「サーバーでServletまたはJSPを実行」「HTMLをレスポンス」「ブラウザへ表示」という順序を書きましょう。"
+  ),
+
+  W(
+    "board-web-w02",
+    "servlet",
+    "ServletとJSPの主な役割の違いを説明しなさい。",
+    "ServletはJavaを中心にリクエスト処理や制御を行い、JSPはHTMLを中心に画面表示を作成する。",
+    [
+      ["servlet"],
+      ["処理", "制御", "java"],
+      ["jsp"],
+      ["表示", "画面", "html"]
+    ],
+    "Servletは処理・制御、JSPは画面表示という分担が基本です。MVCではServletがController、JSPがViewを担当します。"
+  ),
+
+  /* =======================================================
+     HTTP・Content-Type
+  ======================================================= */
+
+  W(
+    "board-http-w01",
+    "response",
+    "Content-Typeヘッダとは何か説明し、HTMLをUTF-8で返す場合の値を書きなさい。",
+    "Content-Typeヘッダはレスポンスボディに含まれるデータの種類や文字コードを表す。HTMLをUTF-8で返す場合は text/html; charset=UTF-8 とする。",
+    [
+      ["content-type", "contenttype"],
+      ["データ", "種類", "形式"],
+      ["text/html"],
+      ["utf-8", "utf8"]
+    ],
+    "Content-Typeはボディのデータ形式を表します。HTMLをUTF-8で返す値は<code>text/html; charset=UTF-8</code>です。"
+  ),
+
+  W(
+    "board-http-w02",
+    "response",
+    "HTMLをUTF-8でレスポンスするためのServletのコードを書きなさい。",
+    "response.setContentType(\"text/html; charset=UTF-8\");",
+    [
+      ["response.setcontenttype"],
+      ["text/html"],
+      ["charset"],
+      ["utf-8", "utf8"]
+    ],
+    "<code>response.setContentType(\"text/html; charset=UTF-8\");</code>と記述します。Content-Typeのハイフンと、setContentTypeのメソッド名を区別しましょう。"
+  ),
+
+  W(
+    "board-http-w03",
+    "request",
+    "HTTPリクエストまたはレスポンスの基本的な構成を説明しなさい。",
+    "HTTPメッセージは開始行、ヘッダー、空行、ボディで構成される。リクエストの開始行にはGETなどのメソッドやリクエスト先が含まれる。",
+    [
+      ["開始行", "リクエストライン", "ステータスライン"],
+      ["ヘッダー", "ヘッダ"],
+      ["ボディ", "ボディー"]
+    ],
+    "基本構造は「開始行・ヘッダー・空行・ボディ」です。リクエストでは開始行をリクエストラインと呼びます。"
+  ),
+
+  W(
+    "board-http-w04",
+    "request",
+    "<code>curl</code>と<code>-v</code>オプションの役割を説明しなさい。",
+    "curlはサーバーへリクエストを送りレスポンスを受け取るツールで、-vオプションを付けるとリクエストやレスポンスのヘッダーなど詳細情報を表示できる。",
+    [
+      ["curl"],
+      ["リクエスト"],
+      ["レスポンス"],
+      ["-v", "詳細", "verbose"]
+    ],
+    "curlはHTTP通信の確認に利用できます。<code>-v</code>を付けることで通信の詳細を確認できます。"
+  ),
+
+  /* =======================================================
+     Servlet登録・URLパターン
+  ======================================================= */
+
+  W(
+    "board-map-w01",
+    "servlet",
+    "URLパターン<code>/hello</code>を設定する<code>@WebServlet</code>アノテーションを書きなさい。",
+    "@WebServlet(\"/hello\")",
+    [
+      ["@webservlet"],
+      ["/hello"]
+    ],
+    "<code>@WebServlet(\"/hello\")</code>と記述します。Servletクラスの宣言より前へ付けます。"
+  ),
+
+  W(
+    "board-map-w02",
+    "servlet",
+    "<code>web.xml</code>でServletを登録するとき、<code>&lt;servlet&gt;</code>と<code>&lt;servlet-mapping&gt;</code>がそれぞれ何を設定するか説明しなさい。",
+    "servlet要素ではservlet-nameとservlet-classを使ってServlet名とServletクラスを登録し、servlet-mapping要素ではservlet-nameとurl-patternを使ってServlet名とURLパターンを対応付ける。",
+    [
+      ["servlet-name"],
+      ["servlet-class"],
+      ["servlet-mapping"],
+      ["url-pattern"]
+    ],
+    "<code>&lt;servlet&gt;</code>でクラスを登録し、<code>&lt;servlet-mapping&gt;</code>でそのServlet名とURLを対応付けます。"
+  ),
+
+  W(
+    "board-map-w03",
+    "servlet",
+    "Servletクラスをコピーして新しいServletを作る場合、<code>@WebServlet</code>について注意すべきことを説明しなさい。",
+    "クラスをコピーしても@WebServletのURLパターンは自動的に変更されないため、既存のServletと重複しないURLパターンへ変更する。重複するとサーバーが起動できない場合がある。",
+    [
+      ["@webservlet"],
+      ["自動", "変更されない"],
+      ["url", "パターン"],
+      ["重複"]
+    ],
+    "コピー後はクラス名だけでなく、<code>@WebServlet</code>のURLパターンも必ず確認します。"
+  ),
+
+  W(
+    "board-map-w04",
+    "servlet",
+    "<code>web.xml</code>で、Servlet名<code>hello</code>とURLパターン<code>/hello</code>を対応付ける部分を書きなさい。",
+    "&lt;servlet-mapping&gt;&lt;servlet-name&gt;hello&lt;/servlet-name&gt;&lt;url-pattern&gt;/hello&lt;/url-pattern&gt;&lt;/servlet-mapping&gt;",
+    [
+      ["servlet-mapping"],
+      ["servlet-name"],
+      ["hello"],
+      ["url-pattern"],
+      ["/hello"]
+    ],
+    "<code>&lt;servlet-mapping&gt;</code>の中へ、同じServlet名とURLパターンを記述します。"
+  ),
+
+  /* =======================================================
+     Servletの基本構造
+  ======================================================= */
+
+  W(
+    "board-servlet-w01",
+    "servlet",
+    "Servletクラスが継承するクラスと、GET・POSTで実行されるメソッドを説明しなさい。",
+    "ServletクラスはHttpServletを継承し、GETリクエストではdoGetメソッド、POSTリクエストではdoPostメソッドが実行される。",
+    [
+      ["httpservlet"],
+      ["継承", "extends"],
+      ["get", "doget"],
+      ["post", "dopost"]
+    ],
+    "HttpServletの継承と、GET＝doGet、POST＝doPostの対応は最重要です。"
+  ),
+
+  W(
+    "board-servlet-w02",
+    "servlet",
+    "<code>HttpServletRequest request</code>と<code>HttpServletResponse response</code>の役割を説明しなさい。",
+    "HttpServletRequestはブラウザからサーバーへ送られたリクエスト情報を扱い、HttpServletResponseはサーバーからブラウザへ返すレスポンス情報を扱う。",
+    [
+      ["httpservletrequest"],
+      ["リクエスト"],
+      ["httpservletresponse"],
+      ["レスポンス"]
+    ],
+    "requestは受信情報、responseは返却情報という対比で説明します。"
+  ),
+
+  W(
+    "board-servlet-w03",
+    "servlet",
+    "Tomcat 9以前とTomcat 10以降で、Servlet APIのパッケージ名がどのように異なるか説明しなさい。",
+    "Tomcat 9以前では主にjavax.servletを使用し、Tomcat 10以降では主にjakarta.servletを使用する。",
+    [
+      ["tomcat9", "tomcat 9"],
+      ["javax.servlet"],
+      ["tomcat10", "tomcat 10"],
+      ["jakarta.servlet"]
+    ],
+    "教材のTomcatのバージョンと、importするパッケージ名を一致させる必要があります。"
+  ),
+
+  W(
+    "board-servlet-w04",
+    "servlet",
+    "GETリクエストを処理するServletの基本的なクラス構造を、<code>HttpServlet</code>の継承と<code>doGet()</code>を含めて書きなさい。",
+    "public class HelloServlet extends HttpServlet { protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { } }",
+    [
+      ["class"],
+      ["extendshttpservlet", "extends httpservlet"],
+      ["doget"],
+      ["httpservletrequest"],
+      ["httpservletresponse"]
+    ],
+    "クラスはHttpServletを継承し、doGetはrequestとresponseを引数として受け取ります。"
+  ),
+
+  /* =======================================================
+     ServletからHTMLを返す
+  ======================================================= */
+
+  W(
+    "board-response-w01",
+    "response",
+    "ServletからHTMLを返す基本的な3つの手順を、順番に説明しなさい。",
+    "最初にresponse.setContentTypeでデータ形式と文字コードを設定し、次にresponse.getWriterでPrintWriterを取得し、最後にout.printlnなどでHTMLを出力する。",
+    [
+      ["setcontenttype"],
+      ["getwriter"],
+      ["printwriter"],
+      ["println", "出力"]
+    ],
+    "順序は「Content-Type設定」「PrintWriter取得」「HTML出力」です。"
+  ),
+
+  W(
+    "board-response-w02",
+    "response",
+    "ServletでPrintWriterを取得し、見出し「HTMLコード」を出力するコードを書きなさい。",
+    "PrintWriter out = response.getWriter(); out.println(\"&lt;h1&gt;HTMLコード&lt;/h1&gt;\");",
+    [
+      ["printwriter"],
+      ["response.getwriter"],
+      ["out.println"],
+      ["h1"],
+      ["htmlコード"]
+    ],
+    "<code>response.getWriter()</code>で取得したPrintWriterへ、<code>println()</code>でHTML文字列を書き込みます。"
+  ),
+
+  /* =======================================================
+     GET・POST
+  ======================================================= */
+
+  W(
+    "board-method-w01",
+    "request",
+    "GETとPOSTの違いを、「主な用途」「データの送信場所」「URL表示」に触れて説明しなさい。",
+    "GETは主にデータの取得や閲覧に使い、送信データをURLの末尾へ付加するためURLに表示される。POSTは主に登録・更新・削除に使い、データをリクエストボディへ格納するためURLには基本的に表示されない。",
+    [
+      ["get"],
+      ["取得", "閲覧"],
+      ["url"],
+      ["post"],
+      ["登録", "更新", "削除", "変更"],
+      ["ボディ"]
+    ],
+    "GETは取得・URL、POSTは送信や変更・リクエストボディという対応を説明しましょう。"
+  ),
+
+  W(
+    "board-method-w02",
+    "request",
+    "POSTを使用しても、それだけでは通信内容が暗号化されない理由と、通信を保護するために必要なものを説明しなさい。",
+    "POSTはデータをURLではなくリクエストボディへ格納するだけで、通信内容を暗号化するものではない。通信を保護するにはHTTPSを使用する。",
+    [
+      ["post"],
+      ["url", "ボディ"],
+      ["暗号化"],
+      ["https"]
+    ],
+    "試験ではGETとPOSTを比較しつつ、実際の暗号化にはHTTPSが必要であることも理解しておきましょう。"
+  ),
+
+  /* =======================================================
+     HTMLフォーム
+  ======================================================= */
+
+  W(
+    "board-form-w01",
+    "request",
+    "送信先を<code>FormSampleServlet</code>、送信方法をPOSTとするformタグの開始タグを書きなさい。",
+    "&lt;form action=\"FormSampleServlet\" method=\"post\"&gt;",
+    [
+      ["<form"],
+      ["action=\"formsampleservlet\"", "action='formsampleservlet'"],
+      ["method=\"post\"", "method='post'"]
+    ],
+    "<code>&lt;form action=\"FormSampleServlet\" method=\"post\"&gt;</code>と記述します。"
+  ),
+
+  W(
+    "board-form-w02",
+    "request",
+    "フォーム部品の<code>name</code>属性と、ラジオボタンの<code>value</code>属性の役割を説明しなさい。",
+    "name属性はサーバー側で値を取得するときのリクエストパラメータ名になり、radioボタンのvalue属性はその項目が選択されたときに実際に送信される値になる。",
+    [
+      ["name"],
+      ["パラメータ", "名前"],
+      ["value"],
+      ["送信", "値"]
+    ],
+    "nameはパラメータ名、valueは選択時に送られる値です。"
+  ),
+
+  W(
+    "board-form-w03",
+    "request",
+    "名前を入力するテキストボックスを作り、パラメータ名を<code>name</code>とするHTMLを書きなさい。",
+    "&lt;input type=\"text\" id=\"name\" name=\"name\"&gt;",
+    [
+      ["<input"],
+      ["type=\"text\"", "type='text'"],
+      ["name=\"name\"", "name='name'"]
+    ],
+    "サーバー側で<code>request.getParameter(\"name\")</code>と取得するには、入力欄へ<code>name=\"name\"</code>を設定します。"
+  ),
+
+  W(
+    "board-form-w04",
+    "request",
+    "画面には表示せず、<code>registerDate</code>という名前で値を送信するhiddenフィールドを書きなさい。",
+    "&lt;input type=\"hidden\" name=\"registerDate\" value=\"2026-07-13\"&gt;",
+    [
+      ["<input"],
+      ["type=\"hidden\"", "type='hidden'"],
+      ["name=\"registerdate\"", "name='registerdate'"],
+      ["value"]
+    ],
+    "hiddenフィールドは<code>type=\"hidden\"</code>とし、nameとvalueを指定します。"
+  ),
+
+  /* =======================================================
+     正規表現・pattern属性
+  ======================================================= */
+
+  W(
+    "board-regex-w01",
+    "request",
+    "正規表現<code>^[0-9a-zA-Z]{4}$</code>の意味を説明しなさい。",
+    "文字列の先頭から末尾までが、半角数字または半角英字のちょうど4文字であることを表す。",
+    [
+      ["先頭", "^"],
+      ["末尾", "$"],
+      ["半角"],
+      ["英数字", "数字", "英字"],
+      ["4"]
+    ],
+    "<code>^</code>と<code>$</code>で文字列全体、<code>[0-9a-zA-Z]</code>で半角英数字、<code>{4}</code>で4文字を表します。"
+  ),
+
+  W(
+    "board-regex-w02",
+    "request",
+    "名前を1文字以上の半角英字だけに制限するinput要素を書きなさい。パラメータ名は<code>name</code>とする。",
+    "&lt;input type=\"text\" name=\"name\" pattern=\"^[a-zA-Z]+$\"&gt;",
+    [
+      ["<input"],
+      ["name=\"name\"", "name='name'"],
+      ["pattern"],
+      ["[a-za-z]", "[a-zA-Z]"],
+      ["+"]
+    ],
+    "<code>&lt;input type=\"text\" name=\"name\" pattern=\"^[a-zA-Z]+$\"&gt;</code>のように記述します。"
+  ),
+
+  W(
+    "board-regex-w03",
+    "request",
+    "正規表現の<code>^</code>、<code>$</code>、<code>+</code>、<code>{4}</code>が表す意味をそれぞれ説明しなさい。",
+    "^は文字列の先頭、$は文字列の末尾、+は直前の要素を1回以上繰り返すこと、{4}は直前の要素を4回繰り返すことを表す。",
+    [
+      ["先頭"],
+      ["末尾"],
+      ["1回以上", "1つ以上"],
+      ["4回"]
+    ],
+    "正規表現のメタ文字は、記号と意味を組み合わせて答えられるようにしましょう。"
+  ),
+
+  /* =======================================================
+     JSP
+  ======================================================= */
+
+  W(
+    "board-jsp-w01",
+    "jsp",
+    "JSPファイルがTomcat内部で実行されるまでの流れを説明しなさい。",
+    "JSPファイルはServletのソースファイルへ変換され、JavaとしてコンパイルされてServletのクラスファイルになり、そのServletが実行されてHTMLレスポンスを返す。",
+    [
+      ["jsp"],
+      ["servlet"],
+      ["変換"],
+      ["コンパイル"],
+      ["html", "レスポンス"]
+    ],
+    "「JSP→Servletソース→コンパイル→Servletクラス→実行」という順序が重要です。"
+  ),
+
+  W(
+    "board-jsp-w02",
+    "jsp",
+    "JSPのpageディレクティブで、HTML・UTF-8を設定する記述を書きなさい。",
+    "&lt;%@ page contentType=\"text/html; charset=UTF-8\" %&gt;",
+    [
+      ["<%@page", "<%@ page"],
+      ["contenttype"],
+      ["text/html"],
+      ["utf-8", "utf8"],
+      ["%>"]
+    ],
+    "<code>&lt;%@ page contentType=\"text/html; charset=UTF-8\" %&gt;</code>と記述します。"
+  ),
+
+  W(
+    "board-jsp-w03",
+    "jsp",
+    "JSPのpageディレクティブで、<code>sample.User</code>クラスをimportする記述を書きなさい。",
+    "&lt;%@ page import=\"sample.User\" %&gt;",
+    [
+      ["<%@page", "<%@ page"],
+      ["import"],
+      ["sample.user"],
+      ["%>"]
+    ],
+    "<code>&lt;%@ page import=\"sample.User\" %&gt;</code>と記述します。"
+  ),
+
+  W(
+    "board-jsp-w04",
+    "jsp",
+    "JSPのスクリプトレット・スクリプト式・JSPコメントの役割と記号を説明しなさい。",
+    "スクリプトレットは&lt;% %&gt;でJavaコードを書き、スクリプト式は&lt;%= %&gt;で式の値を画面へ出力し、JSPコメントは&lt;%-- --%&gt;でブラウザへ出力されないコメントを書く。",
+    [
+      ["<%"],
+      ["java", "コード"],
+      ["<%="],
+      ["出力", "表示"],
+      ["<%--"],
+      ["コメント"]
+    ],
+    "3種類の記号と役割をセットで覚えましょう。"
+  ),
+
+  /* =======================================================
+     MVC
+  ======================================================= */
+
+  W(
+    "board-mvc-w01",
+    "mvc",
+    "MVCモデルにおけるModel・View・Controllerの役割と、Servlet・JSP・JavaBeansの対応を説明しなさい。",
+    "Modelは業務処理やデータ操作を担当しJavaクラスやJavaBeansが対応する。Viewは画面表示を担当しJSPが対応する。Controllerはリクエストを受けて処理の流れを制御しServletが対応する。",
+    [
+      ["model", "モデル"],
+      ["業務", "データ", "処理"],
+      ["view", "ビュー"],
+      ["jsp"],
+      ["controller", "コントローラ"],
+      ["servlet"]
+    ],
+    "Model＝処理・データ、View＝JSPによる表示、Controller＝Servletによる制御です。"
+  ),
+
+  /* =======================================================
+     フォワード・リダイレクト
+  ======================================================= */
+
+  W(
+    "board-forward-w01",
+    "forward",
+    "フォワードとリダイレクトの違いを、「リクエスト回数」「URL」「リクエスト情報」「転送先」に触れて説明しなさい。",
+    "フォワードは同じWebアプリケーション内で同じリクエストを転送するため基本的に1回のリクエストで、URLは変わらずリクエスト情報を引き継げる。リダイレクトはブラウザが移動先へ新しいリクエストを送るため基本的に2回で、URLが変わりリクエスト情報は原則引き継がれず、外部サイトにも移動できる。",
+    [
+      ["フォワード", "forward"],
+      ["1回"],
+      ["変わらない"],
+      ["引き継"],
+      ["リダイレクト", "redirect"],
+      ["2回"],
+      ["url", "変わる"],
+      ["外部", "別"]
+    ],
+    "試験では表形式の比較を文章にできるようにします。フォワードは内部・1回・URL不変、リダイレクトは再アクセス・2回・URL変化です。"
+  ),
+
+  W(
+    "board-forward-w02",
+    "forward",
+    "<code>/WEB-INF/jsp/request.jsp</code>へフォワードするコードを書きなさい。",
+    "RequestDispatcher dispatcher = request.getRequestDispatcher(\"/WEB-INF/jsp/request.jsp\"); dispatcher.forward(request, response);",
+    [
+      ["requestdispatcher"],
+      ["request.getrequestdispatcher"],
+      ["/web-inf/jsp/request.jsp"],
+      ["dispatcher.forward"],
+      ["request"],
+      ["response"]
+    ],
+    "RequestDispatcherを取得し、<code>forward(request, response)</code>を実行します。"
+  ),
+
+  W(
+    "board-forward-w03",
+    "forward",
+    "<code>https://www.google.com/</code>へリダイレクトするコードを書きなさい。",
+    "response.sendRedirect(\"https://www.google.com/\");",
+    [
+      ["response.sendredirect"],
+      ["https://www.google.com"]
+    ],
+    "外部URLへの移動には<code>response.sendRedirect()</code>を使用できます。"
+  ),
+
+  /* =======================================================
+     リクエストスコープ
+  ======================================================= */
+
+  W(
+    "board-scope-w01",
+    "scope",
+    "リクエストスコープとは何か、有効期間と保存先に触れて説明しなさい。",
+    "リクエストスコープは1回のリクエストを処理している間だけデータを保存・共有できる領域で、HttpServletRequestインスタンスにデータを保存する。",
+    [
+      ["1回"],
+      ["リクエスト"],
+      ["保存", "共有"],
+      ["httpservletrequest", "request"]
+    ],
+    "「1回のリクエストの間」「保存先はHttpServletRequest」が重要です。"
+  ),
+
+  W(
+    "board-scope-w02",
+    "scope",
+    "変数<code>user</code>を属性名<code>user</code>でリクエストスコープへ保存し、取得してUser型へキャストするコードを書きなさい。",
+    "request.setAttribute(\"user\", user); User user = (User) request.getAttribute(\"user\");",
+    [
+      ["request.setattribute"],
+      ["\"user\"", "'user'"],
+      ["request.getattribute"],
+      ["(user)"]
+    ],
+    "保存はsetAttribute、取得はgetAttributeです。取得結果はObject型なので、<code>(User)</code>でキャストします。"
+  ),
+
+  W(
+    "board-scope-w03",
+    "scope",
+    "同じ属性名で<code>request.setAttribute()</code>を複数回実行した場合、どうなるか説明しなさい。",
+    "同じ属性名ですでにインスタンスが保存されている場合、後からsetAttributeで保存した値によって上書きされる。",
+    [
+      ["同じ"],
+      ["属性名", "名前"],
+      ["上書き"]
+    ],
+    "属性名が同じ場合、複数の値が同時に保存されるのではなく、新しい値へ上書きされます。"
+  ),
+
+  W(
+    "board-scope-w04",
+    "scope",
+    "JSPでリクエストスコープを利用するときに使う暗黙オブジェクトと、その意味を説明しなさい。",
+    "JSPでは暗黙オブジェクトrequestを使用する。requestはHttpServletRequestインスタンスであり、getAttributeを使ってリクエストスコープの値を取得できる。",
+    [
+      ["暗黙"],
+      ["request"],
+      ["httpservletrequest"],
+      ["getattribute"]
+    ],
+    "JSPではrequestを自分で宣言せずに使用できます。これを暗黙オブジェクトと呼びます。"
+  ),
+
+  W(
+    "board-scope-w05",
+    "scope",
+    "Servletでリクエストスコープへ保存した値が、リダイレクト先では原則利用できない理由を説明しなさい。",
+    "リダイレクトではブラウザが移動先へ新しいリクエストを送るため、1回のリクエストだけで有効なリクエストスコープの値は引き継がれない。",
+    [
+      ["リダイレクト"],
+      ["新しい", "別"],
+      ["リクエスト"],
+      ["引き継", "利用できない"]
+    ],
+    "リクエストスコープは1回のリクエストに結び付いています。リダイレクト後は別リクエストです。"
+  ),
+
+  /* =======================================================
+     JavaBeans
+  ======================================================= */
+
+  W(
+    "board-beans-w01",
+    "beans",
+    "授業で扱うJavaBeansの主なルールを4つ以上説明しなさい。",
+    "java.io.Serializableを実装し、publicなクラスとしてパッケージへ所属させ、publicな引数なしコンストラクタを用意し、フィールドをprivateにして、命名規則に従ったgetterとsetterを用意する。",
+    [
+      ["serializable"],
+      ["public"],
+      ["引数なし", "引数のない"],
+      ["private"],
+      ["getter", "get"],
+      ["setter", "set"]
+    ],
+    "重要なルールは、Serializable、publicクラス、引数なしコンストラクタ、privateフィールド、getter・setterです。"
+  ),
+
+  W(
+    "board-beans-w02",
+    "beans",
+    "<code>Serializable</code>とは何か、JavaBeansで実装する意味を説明しなさい。",
+    "Serializableは実装すべきメソッドを持たないマーカーインターフェースであり、クラスのインスタンスをシリアライズ可能なデータとして扱えることを示す。",
+    [
+      ["serializable"],
+      ["マーカー"],
+      ["インターフェース", "interface"],
+      ["シリアライズ", "保存"]
+    ],
+    "Serializableはメソッドを持たず、シリアライズ可能であることを示すマーカーとして働きます。"
+  ),
+
+  W(
+    "board-beans-w03",
+    "beans",
+    "JavaBeansにpublicな引数なしコンストラクタを用意する理由を説明しなさい。",
+    "外部の仕組みが引数を指定せずに空のインスタンスを作成し、その後setterを使ってプロパティへ値を設定できるようにするため。",
+    [
+      ["引数なし", "引数のない"],
+      ["インスタンス"],
+      ["setter", "set"],
+      ["値", "プロパティ"]
+    ],
+    "「空のインスタンスを作る」「後からsetterで値を設定する」という統一した手順にできます。"
+  ),
+
+  W(
+    "board-beans-w04",
+    "beans",
+    "JavaBeansにおけるフィールドとプロパティの違いを説明しなさい。",
+    "フィールドはクラス内部でデータを保持する変数そのもので原則privateにする。プロパティはgetterやsetterを通して外部から読み書きできるデータの概念である。",
+    [
+      ["フィールド"],
+      ["変数", "内部"],
+      ["private"],
+      ["プロパティ"],
+      ["getter", "setter", "get", "set"],
+      ["外部"]
+    ],
+    "フィールドは内部の変数、プロパティはgetter・setterを通して公開されるデータの窓口です。"
+  ),
+
+  W(
+    "board-beans-w05",
+    "beans",
+    "String型の<code>name</code>とint型の<code>age</code>を持つJavaBeansについて、フィールドと引数なしコンストラクタを書きなさい。",
+    "private String name; private int age; public User() { }",
+    [
+      ["private"],
+      ["stringname", "string name"],
+      ["intage", "int age"],
+      ["publicuser()", "public user()"]
+    ],
+    "フィールドはprivateにし、publicな引数なしコンストラクタを用意します。"
+  ),
+
+  W(
+    "board-beans-w06",
+    "beans",
+    "int型のageプロパティについて、getterとsetterを書きなさい。",
+    "public int getAge() { return age; } public void setAge(int age) { this.age = age; }",
+    [
+      ["publicintgetage", "public int getage"],
+      ["returnage", "return age"],
+      ["publicvoidsetage", "public void setage"],
+      ["intage", "int age"],
+      ["this.age"]
+    ],
+    "getterはageを返し、setterは受け取ったageを<code>this.age</code>へ代入します。"
+  ),
+
+  W(
+    "board-beans-w07",
+    "beans",
+    "<code>serialVersionUID</code>の記述例と役割を書きなさい。",
+    "private static final long serialVersionUID = 1L; シリアライズされるクラスのバージョンを識別するために使用する。",
+    [
+      ["private"],
+      ["static"],
+      ["final"],
+      ["long"],
+      ["serialversionuid"],
+      ["1l", "バージョン"]
+    ],
+    "代表的な記述は<code>private static final long serialVersionUID = 1L;</code>です。"
+  ),
+
+  /* =======================================================
+     MVC・JavaBeans・スコープの総合問題
+  ======================================================= */
+
+  W(
+    "board-total-w01",
+    "mvc",
+    "フォームから送信された名前と年齢を、JavaBeansへ設定してJSPへ表示するまでの処理の流れを説明しなさい。",
+    "Servletがrequest.getParameterで名前と年齢を取得し、年齢をintへ変換する。Userインスタンスを作ってsetterで値を設定し、request.setAttributeでリクエストスコープへ保存する。その後JSPへフォワードし、JSPがgetAttributeでUserを取得してgetterの値を表示する。",
+    [
+      ["getparameter"],
+      ["parseint", "int", "型変換"],
+      ["newuser", "new user", "インスタンス"],
+      ["setter", "setname", "setage"],
+      ["setattribute"],
+      ["フォワード", "forward"],
+      ["getattribute"],
+      ["getter", "getname", "getage"]
+    ],
+    "フォーム→Servlet→型変換→JavaBeans→リクエストスコープ→フォワード→JSPという一連の流れが最重要です。"
+  ),
+
+  W(
+    "board-total-w02",
+    "mvc",
+    "リクエストパラメータ<code>name</code>と<code>age</code>を取得し、Userインスタンスへ設定して、属性名<code>user</code>でリクエストスコープへ保存するコードを書きなさい。",
+    "String name = request.getParameter(\"name\"); String ageText = request.getParameter(\"age\"); int age = Integer.parseInt(ageText); User user = new User(); user.setName(name); user.setAge(age); request.setAttribute(\"user\", user);",
+    [
+      ["request.getparameter"],
+      ["name"],
+      ["age"],
+      ["integer.parseint"],
+      ["newuser", "new user"],
+      ["setname"],
+      ["setage"],
+      ["request.setattribute"]
+    ],
+    "getParameterの戻り値はStringなので、年齢はInteger.parseIntでintへ変換してからsetAgeへ渡します。"
+  ),
+
+  W(
+    "board-total-w03",
+    "mvc",
+    "JSPでリクエストスコープから属性名<code>user</code>のUserを取得し、名前をスクリプト式で表示するコードを書きなさい。",
+    "&lt;% User user = (User) request.getAttribute(\"user\"); %&gt; &lt;%= user.getName() %&gt;",
+    [
+      ["user"],
+      ["(user)"],
+      ["request.getattribute"],
+      ["<%="],
+      ["user.getname"]
+    ],
+    "getAttributeの戻り値をUser型へキャストし、スクリプト式で<code>user.getName()</code>を出力します。"
+  )
+);
+
+
+/* =========================================================
    保存データ
 ========================================================= */
 
